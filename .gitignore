@@ -1,3 +1,4 @@
-TestProject/__pycache__/*
-mc_donalds/__pycache__/*
-mc_donalds/migrations/__pycache__/*
+__pycache__/
+TestProject/__pycache__/
+mc_donalds/__pycache__/
+mc_donalds/migrations/__pycache__/
