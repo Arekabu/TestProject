@@ -34,6 +34,9 @@ class Staff(models.Model):
     position = models.CharField(max_length = 2, choices = POSITIONS, default = cashier)
     labor_contract = models.IntegerField()
 
+    def get_last_name(self):
+        return self.full_name.split()[0]
+
 class ProductOrder(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
     order = models.ForeignKey(Order, on_delete = models.CASCADE)
