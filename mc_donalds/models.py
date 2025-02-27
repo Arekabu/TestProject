@@ -62,5 +62,3 @@ class ProductOrder(models.Model):
     def amount(self, value):
         self._amount = int(value) if value >= 0 else 0
         self.save()
-
-
