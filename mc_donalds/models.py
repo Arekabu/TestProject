@@ -13,7 +13,7 @@ class Order(models.Model):
     products = models.ManyToManyField('Product', through='ProductOrder')
 
     def finish_order(self):
-        self.time_out = datetime.now()
+        self.time_out = datetime.now(timezone.utc)
         self.complete = True
         self.save()
 
@@ -27,6 +27,9 @@ class Product(models.Model):
     name = models.CharField(max_length = 255)
     price = models.FloatField(default = 0.0)
     composition = models.TextField(default = "Состав не указан")
+
+    def __str__(self):
+        return self.name + "/" + str(self.price)
 
 class Staff(models.Model):
     director = 'DI'
@@ -46,13 +49,16 @@ class Staff(models.Model):
     position = models.CharField(max_length = 2, choices = POSITIONS, default = cashier)
     labor_contract = models.IntegerField()
 
+    def __str__(self):
+        return f'{self.full_name}'
+
     def get_last_name(self):
         return self.full_name.split()[0]
 
 class ProductOrder(models.Model):
     product = models.ForeignKey(Product, on_delete = models.CASCADE)
     order = models.ForeignKey(Order, on_delete = models.CASCADE)
-    _amount = models.IntegerField(default = 1, db_column='amount')
+    amount = models.IntegerField(default = 1, db_column='amount')
 
     @property
     def amount(self):
@@ -60,5 +66,5 @@ class ProductOrder(models.Model):
 
     @amount.setter
     def amount(self, value):
-        self._amount = int(value) if value >= 0 else 0
+        self.amount = int(value) if value >= 0 else 0
         self.save()
