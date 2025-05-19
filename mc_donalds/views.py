@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.views import View
 from django.shortcuts import redirect
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, View
+from django.utils.translation import gettext as _
 from .tasks import hello, printer, complete_order
 from datetime import datetime, timedelta, timezone
 from .models import Order
@@ -44,3 +45,10 @@ def take_order(request, oid):
     order.time_out = datetime.now()
     order.save()
     return redirect('/')
+
+
+class Index(View):
+    def get(self, request):
+        string = _('Hello World')
+
+        return HttpResponse(string)

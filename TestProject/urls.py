@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from mc_donalds.views import Index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mc_donalds.urls')),
+    path('index/', Index.as_view(), name='post_index'),
 ]
